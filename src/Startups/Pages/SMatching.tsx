@@ -2,15 +2,10 @@ import { useRef, useState } from "react";
 import type { PointerEvent } from "react";
 
 import {
-  FiCalendar,
   FiChevronLeft,
   FiChevronRight,
-  FiHome,
   FiLink,
-  FiMessageSquare,
   FiMoreVertical,
-  FiTarget,
-  FiUser,
 } from "react-icons/fi";
 import SSidebar from "../../components/SSidebar";
 
@@ -76,18 +71,6 @@ const exampleInvestors: Investor[] = [
   },
 ];
 
-const navigation = [
-  { label: "Perfil", icon: FiUser, href: "/perfil" },
-  { label: "Início", icon: FiHome, href: "/painel" },
-  { label: "Matching", icon: FiTarget, href: "/matching" },
-  {
-    label: "Mensagens",
-    icon: FiMessageSquare,
-    href: "/mensagens",
-  },
-  { label: "Reuniões", icon: FiCalendar, href: "/reunioes" },
-  { label: "Conexões", icon: FiLink, href: "/conexoes" },
-];
 
 function getInitials(name: string) {
   return name
@@ -101,10 +84,9 @@ function getInitials(name: string) {
 
 export default function SMatching({
   investors = exampleInvestors,
-  logoUrl,
   onDecision,
   onOptions,
-}: SMatchingProps  = {}) {
+}: SMatchingProps = {}) {
   const [activeIndex, setActiveIndex] = useState(1);
   const [resolvedIds, setResolvedIds] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -169,8 +151,7 @@ export default function SMatching({
       isSubmitting ||
       !event.isPrimary ||
       event.button !== 0 ||
-      (event.target instanceof Element &&
-        event.target.closest("button, a"))
+      (event.target instanceof Element && event.target.closest("button, a"))
     ) {
       return;
     }
@@ -222,52 +203,7 @@ export default function SMatching({
       className="min-h-screen bg-[#F5F8FA] text-[#222222]"
       style={{ fontFamily: "'Poppins', sans-serif" }}
     >
-     <SSidebar/>
-      <header className="border-b border-[#E5E7EB] bg-white md:hidden">
-        <a
-          href="/painel"
-          className="flex h-16 items-center px-5"
-          aria-label="Vértice — página inicial"
-        >
-          {logoUrl ? (
-            <img
-              src={logoUrl}
-              alt="Vértice"
-              className="max-h-10 w-24 object-contain"
-            />
-          ) : (
-            <span className="text-sm font-semibold tracking-[0.18em]">
-              VÉRTICE
-            </span>
-          )}
-        </a>
-
-        <nav
-          aria-label="Menu principal mobile"
-          className="flex overflow-x-auto px-2"
-        >
-          {navigation.map(({ label, icon: Icon, href }) => {
-            const active = label === "Matching";
-
-            return (
-              <a
-                key={label}
-                href={href}
-                aria-current={active ? "page" : undefined}
-                className={[
-                  "flex shrink-0 items-center gap-2 border-b-2 px-3 py-3 text-xs",
-                  active
-                    ? "border-[#EF5948] text-[#EF5948]"
-                    : "border-transparent text-[#777777]",
-                ].join(" ")}
-              >
-                <Icon size={14} aria-hidden="true" />
-                {label}
-              </a>
-            );
-          })}
-        </nav>
-      </header>
+      <SSidebar />
 
       <main className="md:ml-48">
         <div className="mx-auto max-w-7xl px-4 py-7 sm:px-8 lg:px-10">
@@ -317,9 +253,7 @@ export default function SMatching({
                           "p-5 shadow-[0_3px_3px_rgba(0,0,0,0.22)] sm:p-6",
                           "transition-[transform,opacity] duration-300 ease-out",
                           "motion-reduce:transition-none",
-                          isActive
-                            ? "z-20"
-                            : "pointer-events-none z-10",
+                          isActive ? "z-20" : "pointer-events-none z-10",
                         ].join(" ")}
                         style={{
                           transform: isActive
@@ -394,16 +328,12 @@ export default function SMatching({
                         <dl className="mb-6 mt-4 divide-y divide-[#BEBEBE] border-y border-[#BEBEBE] text-[11px] text-[#777777]">
                           <div className="flex justify-between gap-3 py-2.5">
                             <dt>Localização</dt>
-                            <dd className="text-right">
-                              {investor.location}
-                            </dd>
+                            <dd className="text-right">{investor.location}</dd>
                           </div>
 
                           <div className="flex justify-between gap-3 py-2.5">
                             <dt className="shrink-0">Ticket médio</dt>
-                            <dd className="text-right">
-                              {investor.ticket}
-                            </dd>
+                            <dd className="text-right">{investor.ticket}</dd>
                           </div>
                         </dl>
 
@@ -463,9 +393,7 @@ export default function SMatching({
                     type="button"
                     disabled={isSubmitting}
                     aria-label={`Ver pedido de ${investor.name}`}
-                    aria-current={
-                      index === currentIndex ? "true" : undefined
-                    }
+                    aria-current={index === currentIndex ? "true" : undefined}
                     onClick={() => {
                       setActiveIndex(index);
                       setError("");
@@ -496,9 +424,7 @@ export default function SMatching({
                 className="mx-auto mb-4 text-[#EF5948]"
               />
 
-              <h2 className="text-lg font-medium">
-                Nenhuma conexão pendente
-              </h2>
+              <h2 className="text-lg font-medium">Nenhuma conexão pendente</h2>
 
               <p className="mt-2 text-sm leading-relaxed text-[#777777]">
                 Novos pedidos de investidores aparecerão aqui.

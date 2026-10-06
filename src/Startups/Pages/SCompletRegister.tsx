@@ -3,15 +3,10 @@ import type { FormEvent } from "react";
 
 import {
   FiArrowLeft,
-  FiBriefcase,
   FiCheck,
   FiChevronDown,
-  FiFileText,
-  FiGrid,
   FiLayers,
-  FiMessageSquare,
   FiUploadCloud,
-  FiUsers,
   FiX,
 } from "react-icons/fi";
 import SSidebar from "../../components/SSidebar";

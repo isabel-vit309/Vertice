@@ -1,14 +1,8 @@
 import type { ReactNode } from "react";
 import {
-  FiCalendar,
   FiChevronRight,
   FiExternalLink,
-  FiHome,
-  FiLink,
-  FiMessageSquare,
   FiMoreHorizontal,
-  FiTarget,
-  FiUser,
 } from "react-icons/fi";
 import SSidebar from "../../components/SSidebar";
 
@@ -135,7 +129,6 @@ function MaterialLink({
 
 export default function SPerfil({
   startup = startupExemplo,
-  logoPlataformaUrl,
   onOptions,
 }: SPerfilStartupProps = {}) {
   const information = [
@@ -155,28 +148,6 @@ export default function SPerfil({
       style={{ fontFamily: "'Poppins', sans-serif" }}
     >
      <SSidebar/>
-
-      <header className="border-b border-[#E2E5E7] bg-white md:hidden">
-        <a
-          href="/painel"
-          aria-label="Vértice — página inicial"
-          className="flex h-16 items-center px-5"
-        >
-          {logoPlataformaUrl ? (
-            <img
-              src={logoPlataformaUrl}
-              alt="Vértice"
-              className="max-h-10 w-24 object-contain"
-            />
-          ) : (
-            <span className="text-sm font-semibold tracking-[0.18em]">
-              VÉRTICE
-            </span>
-          )}
-        </a>
-
-       <SSidebar/>
-      </header>
 
       <main className="md:ml-48">
         <div className="mx-auto max-w-7xl px-4 pb-10 pt-6 sm:px-7 lg:px-9">

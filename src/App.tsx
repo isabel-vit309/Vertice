@@ -1,5 +1,4 @@
-import { BrowserRouter, NavLink } from "react-router-dom";
-import { FiBriefcase, FiShield, FiTrendingUp } from "react-icons/fi";
+import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./Routes";
 
 export default function App() {

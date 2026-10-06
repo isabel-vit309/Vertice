@@ -1,10 +1,4 @@
 import {
-  FiCalendar,
-  FiHome,
-  FiLink,
-  FiMessageSquare,
-  FiTarget,
-  FiUser,
 } from "react-icons/fi";
 import SSidebar from "../../components/SSidebar";
 
@@ -19,18 +13,6 @@ type SReunioesProps = {
   onSelectDay?: (day: CalendarDay) => void;
 };
 
-const navigation = [
-  { label: "Perfil", icon: FiUser, href: "/perfil" },
-  { label: "Início", icon: FiHome, href: "/painel" },
-  { label: "Matching", icon: FiTarget, href: "/matching" },
-  {
-    label: "Mensagens",
-    icon: FiMessageSquare,
-    href: "/mensagens",
-  },
-  { label: "Reuniões", icon: FiCalendar, href: "/reunioes" },
-  { label: "Conexões", icon: FiLink, href: "/conexoes" },
-];
 
 const calendarDays: CalendarDay[] = Array.from({ length: 55 }, (_, index) => {
   const currentMonth = index < 31;
@@ -44,7 +26,6 @@ const calendarDays: CalendarDay[] = Array.from({ length: 55 }, (_, index) => {
 });
 
 export default function SMeetings({
-  logoUrl,
   onSelectDay,
 }: SReunioesProps = {}) {
   return (
@@ -52,53 +33,7 @@ export default function SMeetings({
       className="min-h-screen bg-[#F5F8FA] text-[#222222]"
       style={{ fontFamily: "'Poppins', sans-serif" }}
     >
-    <SSidebar/>
-    
-      <header className="border-b border-[#E5E7EB] bg-white md:hidden">
-        <a
-          href="/painel"
-          aria-label="Vértice — página inicial"
-          className="flex h-16 items-center px-5"
-        >
-          {logoUrl ? (
-            <img
-              src={logoUrl}
-              alt="Vértice"
-              className="max-h-10 w-24 object-contain"
-            />
-          ) : (
-            <span className="text-sm font-semibold tracking-[0.18em]">
-              VÉRTICE
-            </span>
-          )}
-        </a>
-
-        <nav
-          aria-label="Menu principal mobile"
-          className="flex overflow-x-auto px-2"
-        >
-          {navigation.map(({ label, icon: Icon, href }) => {
-            const active = label === "Reuniões";
-
-            return (
-              <a
-                key={label}
-                href={href}
-                aria-current={active ? "page" : undefined}
-                className={[
-                  "flex shrink-0 items-center gap-2 border-b-2 px-3 py-3 text-xs",
-                  active
-                    ? "border-[#EF5948] text-[#EF5948]"
-                    : "border-transparent text-[#777777]",
-                ].join(" ")}
-              >
-                <Icon size={14} aria-hidden="true" />
-                {label}
-              </a>
-            );
-          })}
-        </nav>
-      </header>
+      <SSidebar />
 
       <main className="md:ml-48">
         <div className="mx-auto max-w-[1440px] px-4 py-7 sm:px-7 lg:px-10">
