@@ -1,3 +1,6 @@
 node_modules/
 dist/
 *.local
+
+# Cache do Python (scripts da simulação)
+__pycache__/
