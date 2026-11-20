@@ -1,23 +1,14 @@
-# React + Vite + TypeScript
+# Vértice
 
-Base com React, Tailwind CSS, React Icons e React Router.
+Plataforma de matchmaking entre startups e investidores anjo do Nordeste (PI Senac 2026.2).
 
-## Executar
+O projeto fica na pasta [`v2`](v2):
 
-Use Node.js 22 LTS ou superior. Na pasta do projeto:
+| Pasta | Conteúdo |
+|---|---|
+| [`v2/frontend-PI`](v2/frontend-PI) | Front (React + Vite + Tailwind) |
+| [`v2/backend-PI-main`](v2/backend-PI-main) | Backend (Java 21 + Spring Boot + PostgreSQL) |
+| [`v2/scripts`](v2/scripts) | Scripts de apoio |
 
-```bash
-npm install
-npm run dev
-```
-
-Abra a URL exibida pelo Vite no terminal.
-
-## Build
-
-```bash
-npm run build
-npm run preview
-```
-
-
+Como rodar, integração e testes: [`v2/backend-PI-main/README.md`](v2/backend-PI-main/README.md) e
+[`v2/backend-PI-main/docs`](v2/backend-PI-main/docs).
