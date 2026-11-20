@@ -1,6 +1,15 @@
 node_modules/
 dist/
 *.local
-
 # Cache do Python (scripts da simulação)
 __pycache__/
+
+# Variáveis de ambiente reais nunca vão para o Git (o modelo .env.example vai).
+.env
+.env.*
+!.env.example
+
+# Gerados pelo build e pelos testes
+*.tsbuildinfo
+e2e-relatorio/
+e2e-resultados/
