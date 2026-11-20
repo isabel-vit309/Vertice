@@ -13,3 +13,6 @@ __pycache__/
 *.tsbuildinfo
 e2e-relatorio/
 e2e-resultados/
+
+# Local Netlify folder
+.netlify
