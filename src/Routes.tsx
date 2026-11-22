@@ -23,72 +23,74 @@ import {
   StartupRegisterRoute,
   StartupStepRoute,
 } from "./integration/AuthRoutes";
+import LandingPage from "./LandingPage";
 
 export default function AppRoutes() {
-  // A chave pelo caminho reinicia a animação de entrada a cada troca de página.
   const { pathname } = useLocation();
   return (
     <div key={pathname} className="page-enter">
-    <Routes>
-      <Route path="/" element={<Navigate to="/investors/login" replace />} />
+      <Routes>
+        <Route path="/" element={<Navigate to="/home" replace />} />
 
-      <Route path="investors">
-        <Route index element={<Navigate to="login" replace />} />
-        <Route path="login" element={<InvestorLoginRoute />} />
-        <Route path="register" element={<InvestorRegisterRoute />} />
-        <Route path="register-complet">
-          <Route path="step1" element={<InvestorStepRoute step={1} />} />
-          <Route path="step2" element={<InvestorStepRoute step={2} />} />
-          <Route path="step3" element={<InvestorStepRoute step={3} />} />
+        <Route path="home" element={<LandingPage />} />
+
+        <Route path="investors">
+          <Route index element={<Navigate to="login" replace />} />
+          <Route path="login" element={<InvestorLoginRoute />} />
+          <Route path="register" element={<InvestorRegisterRoute />} />
+          <Route path="register-complet">
+            <Route path="step1" element={<InvestorStepRoute step={1} />} />
+            <Route path="step2" element={<InvestorStepRoute step={2} />} />
+            <Route path="step3" element={<InvestorStepRoute step={3} />} />
+          </Route>
+          <Route path="perfil" element={<IPerfil />} />
+          <Route path="matching" element={<IMatching />} />
+          <Route path="startups" element={<InvestorStartups />} />
+          <Route path="startups/:id" element={<InvestorStartupProfile />} />
+          <Route path="mensagens" element={<IMensagens />} />
+          <Route path="meetings" element={<IMeetings />} />
+          <Route path="conections" element={<IConections />} />
         </Route>
-        <Route path="perfil" element={<IPerfil />} />
-        <Route path="matching" element={<IMatching />} />
-        <Route path="startups" element={<InvestorStartups />} />
-        <Route path="startups/:id" element={<InvestorStartupProfile />} />
-        <Route path="mensagens" element={<IMensagens />} />
-        <Route path="meetings" element={<IMeetings />} />
-        <Route path="conections" element={<IConections />} />
-      </Route>
 
-      <Route path="startups">
-        <Route index element={<Navigate to="login" replace />} />
-        <Route path="login" element={<StartupLoginRoute />} />
-        <Route path="register" element={<StartupRegisterRoute />} />
-        <Route path="register-complet">
-          <Route path="step1" element={<StartupStepRoute step={1} />} />
-          <Route path="step2" element={<StartupStepRoute step={2} />} />
-          <Route path="step3" element={<StartupStepRoute step={3} />} />
-          <Route path="step4" element={<StartupStepRoute step={4} />} />
+        <Route path="startups">
+          <Route index element={<Navigate to="login" replace />} />
+          <Route path="login" element={<StartupLoginRoute />} />
+          <Route path="register" element={<StartupRegisterRoute />} />
+          <Route path="register-complet">
+            <Route path="step1" element={<StartupStepRoute step={1} />} />
+            <Route path="step2" element={<StartupStepRoute step={2} />} />
+            <Route path="step3" element={<StartupStepRoute step={3} />} />
+            <Route path="step4" element={<StartupStepRoute step={4} />} />
+          </Route>
+          <Route path="perfil" element={<SPerfil />} />
+          <Route path="matching" element={<SMatching />} />
+          <Route path="mensagens" element={<SMensagens />} />
+          <Route path="meetings" element={<SMeetings />} />
+          <Route path="conections" element={<SConections />} />
         </Route>
-        <Route path="perfil" element={<SPerfil />} />
-        <Route path="matching" element={<SMatching />} />
-        <Route path="mensagens" element={<SMensagens />} />
-        <Route path="meetings" element={<SMeetings />} />
-        <Route path="conections" element={<SConections />} />
-      </Route>
 
-      <Route path="adm">
-        <Route index element={<AdmPage />} />
-        <Route path="login" element={<AdminLogin />} />
-        <Route path="metricas" element={<MetricsPage />} />
-        <Route path="auditoria" element={<AuditPage />} />
-      </Route>
+        <Route path="adm">
+          <Route index element={<AdmPage />} />
+          <Route path="login" element={<AdminLogin />} />
+          <Route path="metricas" element={<MetricsPage />} />
+          <Route path="auditoria" element={<AuditPage />} />
+        </Route>
 
-      <Route
-        path="*"
-        element={
-          <section>
-            <h1 className="text-3xl font-bold">Página não encontrada</h1>
-            <Link
-              to="/"
-              className="mt-4 inline-block text-indigo-700 underline"
-            >
-              Voltar ao início
-            </Link>
-          </section>
-        }
-      />
-    </Routes>
+        <Route
+          path="*"
+          element={
+            <section>
+              <h1 className="text-3xl font-bold">Página não encontrada</h1>
+              <Link
+                to="/"
+                className="mt-4 inline-block text-indigo-700 underline"
+              >
+                Voltar ao início
+              </Link>
+            </section>
+          }
+        />
+      </Routes>
     </div>
   );
 }
