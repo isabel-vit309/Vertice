@@ -184,7 +184,7 @@ const LandingPage: React.FC = () => {
               src={ImageOne}
               alt="Dois profissionais em retratos conectados pela fita laranja do Vértice."
               decoding="async"
-              className="relative z-[1] origin-bottom scale-110  lg:scale-140 xl:scale-160 mx-auto block h-auto w-full max-w-lg self-end object-contain object-bottom md:col-start-2 md:absolute md:bottom-0 md:col-end-3 md:row-start-1 md:row-end-4 md:mx-0 md:w-full min-[1800px]:w-[118%] md:max-w-none md:justify-self-center"
+              className="relative z-[1] origin-bottom scale-110  lg:scale-140 mx-auto block h-auto w-full max-w-lg self-end object-contain object-bottom md:col-start-2 md:absolute md:bottom-0 md:col-end-3 md:row-start-1 md:row-end-4 md:mx-0 md:w-full min-[1800px]:w-[118%] md:max-w-none md:justify-self-center"
             />
           </div>
         </section>
