@@ -407,8 +407,8 @@ export default function MatchDeck({
                 </button>
               </div>
 
-              {/* No celular as setas ficam aqui, abaixo do cartão, para não cobrir o conteúdo. */}
-              <div className="flex flex-wrap items-center justify-center gap-1">
+              {/* Setas do celular, abaixo do cartão (os pontos que mostravam a quantidade de perfis foram removidos). */}
+              <div className="flex items-center justify-center gap-3 sm:hidden">
                 <button
                   type="button"
                   onClick={() => navigate(-1)}
@@ -418,27 +418,6 @@ export default function MatchDeck({
                 >
                   <FiChevronLeft size={22} aria-hidden="true" />
                 </button>
-                {items.map((item, index) => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    disabled={isSubmitting}
-                    aria-label={`Ver ${item.name}`}
-                    aria-current={index === currentIndex ? "true" : undefined}
-                    onClick={() => {
-                      setActiveIndex(index);
-                      setError("");
-                    }}
-                    className="flex h-8 w-8 items-center justify-center rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#EF5948]"
-                  >
-                    <span
-                      className={[
-                        "h-2.5 w-2.5 rounded-full transition-colors",
-                        index === currentIndex ? "bg-[#EF5948]" : "bg-[#D8D8D8]",
-                      ].join(" ")}
-                    />
-                  </button>
-                ))}
                 <button
                   type="button"
                   onClick={() => navigate(1)}

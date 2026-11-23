@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
 import { FiEdit2, FiExternalLink } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import { esquecerPerfilProprio } from "../../components/MatchCelebration";
 
 import ISidebar from "../../components/ISidebar";
 import MultiCombobox from "../../components/MultiCombobox";
@@ -352,6 +353,7 @@ export default function IPerfil() {
           profile={profile}
           onClose={() => setEditing(false)}
           onSaved={(next) => {
+            esquecerPerfilProprio();
             setProfile(next);
             setSaved("Perfil atualizado.");
           }}

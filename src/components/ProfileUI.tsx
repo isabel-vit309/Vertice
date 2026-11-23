@@ -213,7 +213,8 @@ export function Dialog({
   const titleId = useId();
 
   useEffect(() => {
-    const onKey = (event: KeyboardEvent) => event.key === "Escape" && onClose();
+    // Se um campo interno já tratou o Esc (ex.: fechar a lista de segmentos), a janela continua aberta.
+    const onKey = (event: KeyboardEvent) => event.key === "Escape" && !event.defaultPrevented && onClose();
     document.addEventListener("keydown", onKey);
     panel.current?.querySelector<HTMLElement>("input, textarea, button")?.focus();
     const overflow = document.body.style.overflow;

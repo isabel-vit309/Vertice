@@ -1,6 +1,7 @@
 // Perfil da própria startup: dados reais, edição, foto e materiais (pitch deck e canvas).
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { esquecerPerfilProprio } from "../../components/MatchCelebration";
 
 import SSidebar from "../../components/SSidebar";
 import { Breadcrumb, PageShell, StatusMessage } from "../../components/ProfileUI";
@@ -65,6 +66,7 @@ export default function SPerfil() {
           profile={profile}
           onClose={() => setEditing(false)}
           onSaved={(next) => {
+            esquecerPerfilProprio();
             setProfile(next);
             setSaved("Perfil atualizado.");
           }}

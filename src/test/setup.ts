@@ -3,6 +3,8 @@ import "@testing-library/jest-dom/vitest";
 import { cleanup } from "@testing-library/react";
 import { afterEach, beforeEach, vi } from "vitest";
 
+import { clearSession } from "../services/session";
+
 // jsdom não implementa estes recursos usados pelas animações e pelos downloads.
 if (!window.matchMedia) {
   Object.defineProperty(window, "matchMedia", {
@@ -25,6 +27,8 @@ if (!URL.createObjectURL) {
 }
 
 beforeEach(() => {
+  // Sai da conta pelo caminho normal: apagar o localStorage direto seria visto como "outra aba saiu".
+  clearSession();
   localStorage.clear();
   (window as { __reducedMotion?: boolean }).__reducedMotion = false;
 });

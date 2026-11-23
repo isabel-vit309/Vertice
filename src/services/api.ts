@@ -1,5 +1,5 @@
 // Cliente HTTP do Vértice — contrato descrito em backend-PI-main/docs/INTEGRACAO.md.
-import { clearSession, getSession } from "./session";
+import { clearSession, getSession, sessaoTrocadaEmOutraAba } from "./session";
 
 export const API_URL = (
   import.meta.env.VITE_API_URL ?? "http://localhost:8080"
@@ -334,6 +334,7 @@ async function request<T>(
 ): Promise<T> {
   const { auth = false, headers, ...rest } = init;
   const finalHeaders = new Headers(headers);
+  if (auth) garantirSessaoDaAba();
 
   if (auth) {
     const session = getSession();
@@ -377,6 +378,7 @@ async function requestBlob(path: string): Promise<Blob> {
 
 /** Como requestBlob, devolvendo também o nome do arquivo informado pelo servidor. */
 async function requestFile(path: string): Promise<{ blob: Blob; fileName: string | null }> {
+  garantirSessaoDaAba();
   const session = getSession();
   let response: Response;
   try {
@@ -433,6 +435,14 @@ export function validarFoto(file: File): string {
   if (!PHOTO_TYPES.includes(file.type)) return "Envie uma foto em JPG, PNG ou WebP.";
   if (file.size > PHOTO_MAX_BYTES) return "A foto deve ter no máximo 2 MB.";
   return "";
+}
+
+export const MENSAGEM_OUTRA_ABA =
+  "Você entrou com outra conta (ou saiu) em outra aba. Atualize esta página para continuar.";
+
+/** Nunca envia o token de outra conta: se outra aba trocou a sessão, a requisição é bloqueada. */
+function garantirSessaoDaAba() {
+  if (sessaoTrocadaEmOutraAba()) throw new ApiError(409, MENSAGEM_OUTRA_ABA);
 }
 
 function json(body: unknown): RequestInit {

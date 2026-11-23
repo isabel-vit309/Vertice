@@ -61,6 +61,11 @@ export type MatchParty = { name: string; userId?: number | null; hasPhoto?: bool
 // Vinculado ao token: depois de sair e entrar com outra conta na mesma aba, busca de novo.
 let ownProfile: Promise<MatchParty | null> | null = null;
 let ownProfileToken: string | null = null;
+/** Depois de editar o perfil (nome, foto), a próxima animação busca os dados novos. */
+export function esquecerPerfilProprio() {
+  ownProfile = null;
+}
+
 export function loadOwnProfile(): Promise<MatchParty | null> {
   const token = getSession()?.token ?? null;
   if (token !== ownProfileToken) {
