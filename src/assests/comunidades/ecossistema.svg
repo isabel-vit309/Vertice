@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Ecossistema &amp; Eventos">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F2A541"/>
+      <stop offset="1" stop-color="#EF5948"/>
+    </linearGradient>
+  </defs>
+  <rect width="96" height="96" fill="url(#g)"/>
+  <circle cx="16" cy="80" r="24" fill="#fff" opacity=".12"/>
+  <path d="M24 42h10l26-14v40L34 54H24z" fill="#fff"/>
+  <path d="M30 54l4 16h8l-3-16" fill="#fff" opacity=".85"/>
+  <path d="M68 38c4 3 4 13 0 16M74 32c8 6 8 22 0 28" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+</svg>

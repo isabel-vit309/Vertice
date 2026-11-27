@@ -15,6 +15,8 @@ import InvestorStartupProfile from "./Investors/Pages/StartupPerfil";
 import IMensagens from "./Investors/Pages/IMessagens";
 import IMeetings from "./Investors/Pages/IMeetings";
 import IConections from "./Investors/Pages/IConections";
+import IComunidades from "./Investors/Pages/IComunidades";
+import SComunidades from "./Startups/Pages/SComunidades";
 import {
   InvestorLoginRoute,
   InvestorRegisterRoute,
@@ -50,6 +52,7 @@ export default function AppRoutes() {
           <Route path="mensagens" element={<IMensagens />} />
           <Route path="meetings" element={<IMeetings />} />
           <Route path="conections" element={<IConections />} />
+          <Route path="comunidades" element={<IComunidades />} />
         </Route>
 
         <Route path="startups">
@@ -67,6 +70,7 @@ export default function AppRoutes() {
           <Route path="mensagens" element={<SMensagens />} />
           <Route path="meetings" element={<SMeetings />} />
           <Route path="conections" element={<SConections />} />
+          <Route path="comunidades" element={<SComunidades />} />
         </Route>
 
         <Route path="adm">

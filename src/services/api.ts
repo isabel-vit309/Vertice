@@ -298,6 +298,41 @@ export type ChatMessage = {
   meeting: Meeting | null;
 };
 
+/** Tipo de mensagem na comunidade; SISTEMA são avisos de entrada e saída. */
+export type PostCategory = "MENSAGEM" | "NOTICIA" | "INICIATIVA" | "MOVIMENTO" | "SISTEMA";
+
+export type Community = {
+  id: string;
+  slug: string;
+  name: string;
+  description: string;
+  members: number;
+  joined: boolean;
+  unread: number;
+  lastMessage: { text: string; author: string; category: PostCategory; sentAt: string; mine: boolean } | null;
+};
+
+export type CommunityPost = {
+  id: string;
+  sender: "me" | "member" | "system";
+  authorUserId: number;
+  authorName: string;
+  authorRole: string;
+  authorHasPhoto: boolean;
+  category: PostCategory;
+  text: string;
+  sentAt: string;
+};
+
+export type CommunityMember = {
+  userId: number;
+  name: string;
+  role: string;
+  hasPhoto: boolean;
+  me: boolean;
+  joinedAt: string;
+};
+
 export type InvitePayload = {
   date: string;
   time: string;
@@ -620,6 +655,28 @@ export const api = {
     },
   },
 
+  comunidades: {
+    listar(): Promise<Community[]> {
+      return request<Community[]>("/comunidades", { auth: true });
+    },
+    entrar(id: string): Promise<Community> {
+      return request<Community>(`/comunidades/${id}/entrar`, { method: "POST", auth: true });
+    },
+    sair(id: string): Promise<Community> {
+      return request<Community>(`/comunidades/${id}/sair`, { method: "POST", auth: true });
+    },
+    /** Sem `depois`: histórico recente. Com `depois`: só as mensagens novas. Marca tudo como lido. */
+    mensagens(id: string, depois?: string): Promise<CommunityPost[]> {
+      const query = depois ? `?depois=${encodeURIComponent(depois)}` : "";
+      return request<CommunityPost[]>(`/comunidades/${id}/mensagens${query}`, { auth: true });
+    },
+    enviar(id: string, text: string, category: PostCategory = "MENSAGEM"): Promise<CommunityPost> {
+      return request<CommunityPost>(`/comunidades/${id}/mensagens`, { ...json({ text, category }), auth: true });
+    },
+    membros(id: string): Promise<CommunityMember[]> {
+      return request<CommunityMember[]>(`/comunidades/${id}/membros`, { auth: true });
+    },
+  },
   reunioes: {
     listar(): Promise<Meeting[]> {
       return request<Meeting[]>("/reunioes", { auth: true });

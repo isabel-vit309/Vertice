@@ -1,5 +1,5 @@
 import { FiBriefcase, FiGrid, FiMessageSquare, FiUsers } from "react-icons/fi";
-import { HiOutlineRocketLaunch } from "react-icons/hi2";
+import { HiOutlineRocketLaunch, HiOutlineUserGroup } from "react-icons/hi2";
 import { IoInfinite } from "react-icons/io5";
 
 import NewMatchWatcher from "./NewMatchWatcher";
@@ -12,6 +12,7 @@ const navigation = [
   { label: "Mensagens", icon: FiMessageSquare, href: "/investors/mensagens" },
   { label: "Reuniões", icon: FiBriefcase, href: "/investors/meetings" },
   { label: "Conexões", icon: IoInfinite, href: "/investors/conections" },
+  { label: "Comunidades", icon: HiOutlineUserGroup, href: "/investors/comunidades" },
 ];
 
 export default function ISidebar() {
