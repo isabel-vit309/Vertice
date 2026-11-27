@@ -333,6 +333,93 @@ export type CommunityMember = {
   joinedAt: string;
 };
 
+/* ------------------------------------------------ aba Crescimento */
+
+export type GrowthMode = "COM_FATURAMENTO" | "SEM_FATURAMENTO";
+export type RevenueCriterion = "FATURADA" | "RECEBIDA";
+export type BusinessModel = "B2B" | "B2C" | "B2B2C" | "MARKETPLACE" | "OUTRO";
+export type MilestoneStatus = "NAO_INICIADO" | "EM_ANDAMENTO" | "CONCLUIDO";
+
+export type GrowthSettings = {
+  mode: GrowthMode;
+  revenueCriterion: RevenueCriterion | null;
+  businessModel: BusinessModel | null;
+  indicators: string[];
+  milestone: string | null;
+  /** "AAAA-MM" */
+  milestoneDeadline: string | null;
+  updatedAt: string;
+};
+
+export type GrowthSettingsPayload = {
+  mode: GrowthMode;
+  revenueCriterion?: RevenueCriterion | null;
+  businessModel?: BusinessModel | null;
+  indicators?: string[];
+  milestone?: string | null;
+  milestoneDeadline?: string | null;
+};
+
+/** Atualização de um mês, com os indicadores calculados pelo backend. */
+export type MonthlyUpdate = {
+  /** "AAAA-MM" */
+  month: string;
+  mode: GrowthMode;
+  revenueCriterion: RevenueCriterion | null;
+  revenue: number | null;
+  directCosts: number | null;
+  operatingExpenses: number | null;
+  grossProfit: number | null;
+  grossMarginPercent: number | null;
+  revenueGrowthPercent: number | null;
+  expenses: number | null;
+  operatingResult: number;
+  burn: number;
+  cash: number;
+  /** Nulo quando não há queima de caixa. */
+  runwayMonths: number | null;
+  newFunding: boolean;
+  fundingAmount: number | null;
+  newDebt: boolean;
+  debtAmount: number | null;
+  indicators: Record<string, number> | null;
+  milestone: string | null;
+  milestoneStatus: MilestoneStatus | null;
+  milestoneProgress: number | null;
+  comment: string | null;
+  submittedAt: string;
+  editedAt: string | null;
+};
+
+export type MonthlyUpdatePayload = {
+  revenue?: number | null;
+  directCosts?: number | null;
+  operatingExpenses?: number | null;
+  expenses?: number | null;
+  cash: number | null;
+  newFunding: boolean;
+  fundingAmount?: number | null;
+  newDebt: boolean;
+  debtAmount?: number | null;
+  indicators?: Record<string, number | null>;
+  milestoneStatus?: MilestoneStatus | null;
+  milestoneProgress?: number | null;
+  comment?: string | null;
+};
+
+export type GrowthDashboard = {
+  startupId: number | null;
+  startupName: string;
+  owner: boolean;
+  /** Nulo na primeira visita (ainda não configurado). */
+  settings: GrowthSettings | null;
+  /** Do mês mais antigo ao mais recente. */
+  updates: MonthlyUpdate[];
+  /** Só para a própria startup: o próximo mês a enviar e os meses fechados em aberto. */
+  nextMonth: string | null;
+  pendingMonths: string[];
+};
+
 export type InvitePayload = {
   date: string;
   time: string;
@@ -652,6 +739,27 @@ export const api = {
     /** Só o investidor da conexão pode convidar. */
     convidar(conexaoId: string, convite: InvitePayload): Promise<ChatMessage> {
       return request<ChatMessage>(`/conversas/${conexaoId}/convites`, { ...json(convite), auth: true });
+    },
+  },
+
+  crescimento: {
+    /** Painel da própria startup. */
+    meu(): Promise<GrowthDashboard> {
+      return request<GrowthDashboard>("/crescimento", { auth: true });
+    },
+    configurar(dados: GrowthSettingsPayload): Promise<GrowthDashboard> {
+      return request<GrowthDashboard>("/crescimento/configuracao", { ...sendJson("PUT", dados), auth: true });
+    },
+    /** Cria ou corrige a atualização do mês ("AAAA-MM"). */
+    atualizar(mes: string, dados: MonthlyUpdatePayload): Promise<GrowthDashboard> {
+      return request<GrowthDashboard>(`/crescimento/atualizacoes/${encodeURIComponent(mes)}`, {
+        ...sendJson("PUT", dados),
+        auth: true,
+      });
+    },
+    /** Painel de uma startup, visto pelo investidor (id do perfil da startup). */
+    daStartup(startupId: string | number): Promise<GrowthDashboard> {
+      return request<GrowthDashboard>(`/startups/${startupId}/crescimento`, { auth: true });
     },
   },
 

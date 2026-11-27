@@ -17,6 +17,7 @@ import IMeetings from "./Investors/Pages/IMeetings";
 import IConections from "./Investors/Pages/IConections";
 import IComunidades from "./Investors/Pages/IComunidades";
 import SComunidades from "./Startups/Pages/SComunidades";
+import SCrescimento from "./Startups/Pages/SCrescimento";
 import {
   InvestorLoginRoute,
   InvestorRegisterRoute,
@@ -70,6 +71,7 @@ export default function AppRoutes() {
           <Route path="mensagens" element={<SMensagens />} />
           <Route path="meetings" element={<SMeetings />} />
           <Route path="conections" element={<SConections />} />
+          <Route path="crescimento" element={<SCrescimento />} />
           <Route path="comunidades" element={<SComunidades />} />
         </Route>
 

@@ -1,4 +1,4 @@
-import { FiBriefcase, FiGrid, FiMessageSquare, FiUsers } from "react-icons/fi";
+import { FiBriefcase, FiGrid, FiMessageSquare, FiTrendingUp, FiUsers } from "react-icons/fi";
 import { HiOutlineUserGroup } from "react-icons/hi2";
 import { IoInfinite } from "react-icons/io5";
 
@@ -10,6 +10,7 @@ const navigation = [
   { label: "Mensagens", icon: FiMessageSquare, href: "/startups/mensagens" },
   { label: "Reuniões", icon: FiBriefcase, href: "/startups/meetings" },
   { label: "Conexões", icon: IoInfinite, href: "/startups/conections" },
+  { label: "Crescimento", icon: FiTrendingUp, href: "/startups/crescimento" },
   { label: "Comunidades", icon: HiOutlineUserGroup, href: "/startups/comunidades" },
 ];
 
