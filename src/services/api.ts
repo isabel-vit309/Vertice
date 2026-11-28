@@ -333,6 +333,49 @@ export type CommunityMember = {
   joinedAt: string;
 };
 
+/* ------------------------------------------------ Timeline */
+
+/** Quem publicou ou comentou; o front monta o link do perfil com estes dados. */
+export type TimelineAuthor = {
+  userId: number;
+  type: "STARTUP" | "INVESTIDOR";
+  /** Id do perfil da startup (para /startups/{id}/perfil) ou do investidor. */
+  profileId: string | null;
+  name: string;
+  role: string;
+  hasPhoto: boolean;
+};
+
+export type TimelinePost = {
+  id: string;
+  author: TimelineAuthor;
+  /** Nulo num compartilhamento sem texto. */
+  text: string | null;
+  createdAt: string;
+  mine: boolean;
+  likes: number;
+  comments: number;
+  shares: number;
+  liked: boolean;
+  /** Eu já compartilhei (sem texto) esta publicação. */
+  shared: boolean;
+  /** Compartilhamento sem texto: mostrar a original com "Fulano compartilhou". */
+  repost: boolean;
+  sharedPost: TimelinePost | null;
+  /** A publicação compartilhada foi removida. */
+  sharedUnavailable: boolean;
+};
+
+export type TimelineComment = {
+  id: string;
+  postId: string;
+  author: TimelineAuthor;
+  text: string;
+  createdAt: string;
+  mine: boolean;
+  canDelete: boolean;
+};
+
 /* ------------------------------------------------ aba Crescimento */
 
 export type GrowthMode = "COM_FATURAMENTO" | "SEM_FATURAMENTO";
@@ -644,6 +687,10 @@ export const api = {
     startup(startupId: string): Promise<StartupProfile> {
       return request<StartupProfile>(`/startups/${startupId}/perfil`, { auth: true });
     },
+    /** Perfil público de um investidor aprovado, pelo id do usuário (sem CPF, CNPJ e e-mail). */
+    investidor(userId: string | number): Promise<InvestorProfile> {
+      return request<InvestorProfile>(`/investidores/${userId}/perfil`, { auth: true });
+    },
     editarStartup(dados: StartupUpdate): Promise<StartupProfile> {
       return request<StartupProfile>("/perfil/startup", { ...sendJson("PUT", dados), auth: true });
     },
@@ -739,6 +786,46 @@ export const api = {
     /** Só o investidor da conexão pode convidar. */
     convidar(conexaoId: string, convite: InvitePayload): Promise<ChatMessage> {
       return request<ChatMessage>(`/conversas/${conexaoId}/convites`, { ...json(convite), auth: true });
+    },
+  },
+
+  timeline: {
+    /** Primeira página (sem `antes`) ou a seguinte (com o id da última publicação carregada). */
+    feed(antes?: string): Promise<TimelinePost[]> {
+      return request<TimelinePost[]>(`/timeline${antes ? `?antes=${encodeURIComponent(antes)}` : ""}`, { auth: true });
+    },
+    /** Publicações mais novas que `depois` (aviso de novas publicações). */
+    novas(depois: string): Promise<TimelinePost[]> {
+      return request<TimelinePost[]>(`/timeline?depois=${encodeURIComponent(depois)}`, { auth: true });
+    },
+    doUsuario(userId: string | number, antes?: string): Promise<TimelinePost[]> {
+      const query = antes ? `?antes=${encodeURIComponent(antes)}` : "";
+      return request<TimelinePost[]>(`/timeline/usuarios/${userId}${query}`, { auth: true });
+    },
+    publicar(text: string | null, sharedPostId?: string): Promise<TimelinePost> {
+      return request<TimelinePost>("/timeline", { ...json({ text, sharedPostId: sharedPostId ?? null }), auth: true });
+    },
+    excluir(id: string): Promise<void> {
+      return request<void>(`/timeline/${id}`, { method: "DELETE", auth: true });
+    },
+    curtir(id: string): Promise<TimelinePost> {
+      return request<TimelinePost>(`/timeline/${id}/curtida`, { method: "POST", auth: true });
+    },
+    descurtir(id: string): Promise<TimelinePost> {
+      return request<TimelinePost>(`/timeline/${id}/curtida`, { method: "DELETE", auth: true });
+    },
+    /** Desfaz o compartilhamento sem texto da publicação `id`. */
+    descompartilhar(id: string): Promise<TimelinePost> {
+      return request<TimelinePost>(`/timeline/${id}/compartilhamento`, { method: "DELETE", auth: true });
+    },
+    comentarios(id: string): Promise<TimelineComment[]> {
+      return request<TimelineComment[]>(`/timeline/${id}/comentarios`, { auth: true });
+    },
+    comentar(id: string, text: string): Promise<TimelineComment> {
+      return request<TimelineComment>(`/timeline/${id}/comentarios`, { ...json({ text }), auth: true });
+    },
+    excluirComentario(id: string): Promise<void> {
+      return request<void>(`/timeline/comentarios/${id}`, { method: "DELETE", auth: true });
     },
   },
 

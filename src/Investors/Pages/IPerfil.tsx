@@ -1,25 +1,20 @@
 // Perfil do próprio investidor: dados reais, foto e edição (inclui as preferências do matching).
 import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
-import { FiEdit2, FiExternalLink } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { esquecerPerfilProprio } from "../../components/MatchCelebration";
 
 import ISidebar from "../../components/ISidebar";
+import { InvestorProfileView } from "../../components/InvestorProfile";
 import MultiCombobox from "../../components/MultiCombobox";
 import StateCityFields from "../../components/StateCityFields";
 import TicketRangeFields, { ticketRangeError } from "../../components/TicketRangeFields";
 import {
   Breadcrumb,
   Dialog,
-  InfoList,
   PageShell,
-  Paragraph,
   PhotoPicker,
-  ProfileCard,
-  ProfilePhoto,
   StatusMessage,
-  cardClass,
   fieldInput,
   fieldLabel,
   outlineButton,
@@ -27,10 +22,10 @@ import {
 } from "../../components/ProfileUI";
 import { toCurrencyField } from "../../components/StartupProfile";
 import { ESTAGIOS, SEGMENTOS, toOptions } from "../../data/options";
-import { ApiError, api, formatarTicket } from "../../services/api";
+import { ApiError, api } from "../../services/api";
 import type { InvestorProfile } from "../../services/api";
 import { getSession } from "../../services/session";
-import { maskCnpj, maskCpf, parseCurrency } from "../../utils/forms";
+import { parseCurrency } from "../../utils/forms";
 
 function InvestorEditDialog({
   profile,
@@ -252,8 +247,6 @@ export default function IPerfil() {
     };
   }, [navigate]);
 
-  const local = profile ? [profile.city, profile.state].filter(Boolean).join(" - ") : "";
-
   return (
     <PageShell sidebar={<ISidebar />}>
       <Breadcrumb parent="Perfil" href="/investors/perfil" current={profile?.name ?? "Carregando..."} />
@@ -265,87 +258,14 @@ export default function IPerfil() {
       )}
       {profile && (
         <div className={saved ? "mt-4" : ""}>
-          <header className={`${cardClass} relative mb-6 flex flex-wrap items-center gap-5 p-5 sm:gap-6 sm:p-6`}>
-            <ProfilePhoto userId={profile.userId} hasPhoto={profile.hasPhoto} name={profile.name} />
-            <div className="min-w-0 flex-1 basis-44">
-              <h1 className="break-words text-2xl font-semibold tracking-tight sm:text-3xl">{profile.name}</h1>
-              <ul className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[#EF5948] sm:text-sm">
-                <li>{profile.type === "MENTOR" ? "Mentor(a)" : "Investidor(a) anjo"}</li>
-                {profile.segments.length > 0 && (
-                  <li className="border-l border-[#D5D5D5] pl-3">{profile.segments.join(", ")}</li>
-                )}
-                {local && <li className="border-l border-[#D5D5D5] pl-3">{local}</li>}
-              </ul>
-            </div>
-            <button
-              type="button"
-              onClick={() => {
-                setSaved("");
-                setEditing(true);
-              }}
-              className={outlineButton("w-full sm:w-auto sm:self-start")}
-            >
-              <FiEdit2 aria-hidden="true" /> Editar perfil
-            </button>
-          </header>
-
-          <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)]">
-            <div className="grid min-w-0 gap-5">
-              <ProfileCard title="Sobre o(a) investidor(a)">
-                <Paragraph text={profile.aboutInvestor} />
-              </ProfileCard>
-              <div className="grid items-stretch gap-5 sm:grid-cols-2">
-                <ProfileCard title="Carreira">
-                  <Paragraph text={profile.career} />
-                </ProfileCard>
-                <ProfileCard title="O que está buscando">
-                  <Paragraph text={profile.lookingFor} />
-                </ProfileCard>
-              </div>
-            </div>
-
-            <div className="grid min-w-0 gap-5">
-              <ProfileCard title="Startups que procuro">
-                <InfoList
-                  items={[
-                    { label: "Segmentos", value: profile.segments.join(", ") },
-                    { label: "Estágios", value: profile.stages.length ? profile.stages.join(", ") : "Todos" },
-                    { label: "Cidade/Estado", value: local },
-                  ]}
-                />
-              </ProfileCard>
-              <ProfileCard title="Ticket médio">
-                <p className="text-xs text-[#888888]">Faixa de investimento</p>
-                <p className="mt-2 text-xl font-medium leading-snug text-[#EF5948]">
-                  {formatarTicket(profile.ticketMin, profile.ticketMax)}
-                </p>
-              </ProfileCard>
-              <ProfileCard title="Dados da conta">
-                <InfoList
-                  items={[
-                    { label: "E-mail", value: profile.email ?? "" },
-                    ...(profile.cpf ? [{ label: "CPF", value: maskCpf(profile.cpf) }] : []),
-                    ...(profile.cnpj ? [{ label: "CNPJ", value: maskCnpj(profile.cnpj) }] : []),
-                    {
-                      label: "LinkedIn",
-                      value: profile.linkedin ? (
-                        <a
-                          href={profile.linkedin}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-[#EF5948] hover:underline"
-                        >
-                          Abrir <FiExternalLink size={11} aria-hidden="true" />
-                        </a>
-                      ) : (
-                        ""
-                      ),
-                    },
-                  ]}
-                />
-              </ProfileCard>
-            </div>
-          </div>
+          <InvestorProfileView
+            profile={profile}
+            owner
+            onEdit={() => {
+              setSaved("");
+              setEditing(true);
+            }}
+          />
         </div>
       )}
       {profile && editing && (

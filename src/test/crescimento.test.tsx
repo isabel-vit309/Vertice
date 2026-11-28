@@ -176,6 +176,6 @@ describe("investidor e menu", () => {
     saveSession({ token: "t", email: "st@x.com", papel: "STARTUP" });
     render(<MemoryRouter><SSidebar /></MemoryRouter>);
     const links = within(screen.getByRole("navigation", { name: "Menu principal" })).getAllByRole("link");
-    expect(links.map((l) => l.textContent)).toEqual(["Perfil", "Matching", "Mensagens", "Reuniões", "Conexões", "Crescimento", "Comunidades"]);
+    expect(links.map((l) => l.textContent)).toEqual(["Perfil", "Matching", "Mensagens", "Reuniões", "Conexões", "Crescimento", "Timeline", "Comunidades"]);
   });
 });

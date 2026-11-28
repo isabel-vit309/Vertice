@@ -18,6 +18,9 @@ import IConections from "./Investors/Pages/IConections";
 import IComunidades from "./Investors/Pages/IComunidades";
 import SComunidades from "./Startups/Pages/SComunidades";
 import SCrescimento from "./Startups/Pages/SCrescimento";
+import ITimeline from "./Investors/Pages/ITimeline";
+import STimeline from "./Startups/Pages/STimeline";
+import { PublicInvestorPage, PublicStartupPage } from "./components/PublicProfilePages";
 import {
   InvestorLoginRoute,
   InvestorRegisterRoute,
@@ -53,6 +56,8 @@ export default function AppRoutes() {
           <Route path="mensagens" element={<IMensagens />} />
           <Route path="meetings" element={<IMeetings />} />
           <Route path="conections" element={<IConections />} />
+          <Route path="timeline" element={<ITimeline />} />
+          <Route path="perfis/investidor/:userId" element={<PublicInvestorPage viewer="investor" />} />
           <Route path="comunidades" element={<IComunidades />} />
         </Route>
 
@@ -72,6 +77,9 @@ export default function AppRoutes() {
           <Route path="meetings" element={<SMeetings />} />
           <Route path="conections" element={<SConections />} />
           <Route path="crescimento" element={<SCrescimento />} />
+          <Route path="timeline" element={<STimeline />} />
+          <Route path="perfis/investidor/:userId" element={<PublicInvestorPage viewer="startup" />} />
+          <Route path="perfis/startup/:id" element={<PublicStartupPage />} />
           <Route path="comunidades" element={<SComunidades />} />
         </Route>
 
